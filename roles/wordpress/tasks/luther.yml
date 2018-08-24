@@ -1,0 +1,40 @@
+---
+- name: Install WordPress multisite
+  command: wp core multisite-convert --path=/vagrant/wordpress
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Replace existing .htaccess file with multisite version
+  copy:
+    src: htaccess-multisite
+    dest: /vagrant/wordpress/.htaccess
+
+#- name: set wp-config.php for multisite
+#  command: wp config set WP_ALLOW_MULTISITE true --raw
+#  become: true
+#  become_method: sudo
+#  become_user: www-data
+#  with_items:
+#    - WP_ALLOW_MULTISITE true
+#    - MULTISITE true
+#    - SUBDOMAIN_INSTALL false
+
+- name: Generate wp-config.php
+  shell: wp config create --dbname=wordpress --dbuser=wordpress --dbpass={{ wp_db_password.stdout }} --dbcharset=utf8mb4 --dbcollate=utf8mb4_unicode_ci --locale=en_US --extra-php --force
+  become: true
+  become_method: sudo
+  become_user: www-data
+  args:
+    chdir: /vagrant/wordpress
+    stdin: |
+      define( 'WP_DEBUG', true );
+      define( 'SAVEQUERIES', true );
+      define( 'WP_ALLOW_MULTISITE', true );
+      define( 'MULTISITE', true );
+      define( 'SUBDOMAIN_INSTALL', false );
+      define( 'DOMAIN_CURRENT_SITE', '192.168.50.50' );
+      define( 'PATH_CURRENT_SITE', '/' );
+      define( 'SITE_ID_CURRENT_SITE', 1 );
+      define( 'BLOG_ID_CURRENT_SITE', 1 );
