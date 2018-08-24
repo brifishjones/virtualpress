@@ -1,4 +1,11 @@
 ---
+- name: Install WordPress in 5 seconds and create tables in the database 
+  command: wp core install --url=192.168.50.50 --title=VirtualPress --admin_user=admin --admin_password=changeme --admin_email=info@example.com --path=/vagrant/wordpress
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
 - name: Install WordPress multisite
   command: wp core multisite-convert --path=/vagrant/wordpress
   become: true
@@ -21,7 +28,7 @@
 #    - MULTISITE true
 #    - SUBDOMAIN_INSTALL false
 
-- name: Generate wp-config.php
+- name: Regenerate wp-config.php with multisite defines
   shell: wp config create --dbname=wordpress --dbuser=wordpress --dbpass={{ wp_db_password.stdout }} --dbcharset=utf8mb4 --dbcollate=utf8mb4_unicode_ci --locale=en_US --extra-php --force
   become: true
   become_method: sudo
