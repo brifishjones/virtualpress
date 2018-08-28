@@ -1,0 +1,17 @@
+---
+- name: Allow other clients other than localhost to connect to database by commenting out bind-address 127.0.0.1
+  replace:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    replace: '# bind-address'
+  notify:
+    - restart mysql
+
+- name: Setup MySQL access to wordpress database from database application such as Sequel Pro running on local Mac
+  mysql_user:
+    name: "root"
+    host: "192.168.%"
+    priv: "*.*:ALL"
+    state: present
+  notify:
+    - restart mysql
