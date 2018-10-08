@@ -45,3 +45,11 @@
       define( 'PATH_CURRENT_SITE', '/' );
       define( 'SITE_ID_CURRENT_SITE', 1 );
       define( 'BLOG_ID_CURRENT_SITE', 1 );
+
+- name: Install Authorizer LDAP authenticator plugin
+  command: wp plugin install authorizer --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
