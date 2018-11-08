@@ -53,3 +53,10 @@
   become_user: www-data
   ignore_errors: true
 
+- name: Install User Switching plugin
+  command: wp plugin install user-switching --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
