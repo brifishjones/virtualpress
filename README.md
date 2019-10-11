@@ -23,15 +23,15 @@ Together with the prerequisites listed above, the scripts contained herein will 
 * Has a complete MySQL 5 setup (client and server) installed
 * Has a complete Apache 2 setup installed (with mod_rewrite)
 * Has a complete PHP7 setup (both PHP-FPM and CLI versions) installed, with the following modules:
-    * php7.0
-    * php7.0-cli
-    * php7.0-curl
-    * php7.0-gd
+    * php7.3
+    * php7.3-cli
+    * php7.3-curl
+    * php7.3-gd
     * php-imagick
-    * php7.0-mysql
-    * php7.0-xmlrpc
-    * php7.0-xml
-	* php7.0-mbstring
+    * php7.3-mysql
+    * php7.3-xmlrpc
+    * php7.3-xml
+	* php7.3-mbstring
     * php-xdebug (ready for remote debugging on port 10000; use the IDE key "virtualpress")
 * Installs the latest version of the WordPress software in /vagrant, so you can work with local files via your favorite editor/IDE; sets up symlink to it at /var/www/wordpress`so Apache can find it
 * Has a MySQL database (name: "wordpress") and database user (name: "wordpress") for WordPress to make use of
