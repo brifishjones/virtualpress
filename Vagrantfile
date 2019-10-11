@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.50.50"
   config.vm.provision "ansible_local" do |ansible|
     ansible.install = "true"
+    ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/get-pip.py | sudo python"  # fixes bug in 2.2.5
     ansible.install_mode = "pip"
     ansible.verbose = "v"
     ansible.playbook = "setup.yml"
