@@ -1,0 +1,70 @@
+---
+- name: Install WordPress in 5 seconds and create tables in the database 
+  command: wp core install --url=192.168.50.50 --title=VirtualPress --admin_user=admin --admin_password=changeme --admin_email=info@example.com --path=/vagrant/wordpress
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Elementor page builder plugin
+  command: wp plugin install elementor --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Advanced Custom Fields plugin
+  command: wp plugin install advanced-custom-fields --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Regenerate Thumbnails plugin
+  command: wp plugin install regenerate-thumbnails --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install WPforms Lite plugin
+  command: wp plugin install wpforms-lite --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Wordfence Security plugin
+  command: wp plugin install wordfence --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Yoast SEO plugin
+  command: wp plugin install wordpress-seo --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install the OceanWP theme
+  command: wp theme install oceanwp --path=/vagrant/wordpress --force --activate 
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install Ocean Extra plugin
+  command: wp plugin install ocean-extra --path=/vagrant/wordpress --force --activate --activate-network
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Make the permalink based on the blog post name
+  command: wp option update permalink_structure '/%postname%/' --path=/vagrant/wordpress
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
