@@ -62,6 +62,20 @@
   become_user: www-data
   ignore_errors: true
 
+- name: Install the OnePress theme
+  command: wp theme install onepress --path=/vagrant/wordpress --force
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
+- name: Install the Neve theme
+  command: wp theme install neve --path=/vagrant/wordpress --force
+  become: true
+  become_method: sudo
+  become_user: www-data
+  ignore_errors: true
+
 - name: Make the permalink based on the blog post name
   command: wp option update permalink_structure '/%postname%/' --path=/vagrant/wordpress
   become: true
