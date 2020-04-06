@@ -14,7 +14,7 @@
 - name: Generate random password for MySQL root user
   shell: apg -a 1 -n 1 -m 24 -x 24 -M NCL
   register: mysql_root_password
-  no_log: True
+# no_log: True
     
 - name: Setup MySQL root password
   mysql_user:
@@ -60,4 +60,20 @@
   notify:
     - restart mysql
 
+- name: Allow other clients other than localhost to connect to database by commenting out bind-address 127.0.0.1 - note potential security risk
+  replace:
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    replace: '# bind-address'
+  notify:
+    - restart mysql
 
+- name: Setup MySQL access to server database from database application such as Sequel Pro running on local computer
+  mysql_user:
+    name: "root"
+    password: "{{ mysql_root_password.stdout }}" 
+    host: "%"
+    priv: "*.*:ALL,GRANT"
+    state: present
+  notify:
+    - restart mysql
